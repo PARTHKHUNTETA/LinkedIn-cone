@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './HomeComponent.scss';
 function HomeComponent() {
     return (
-        <div>HomeComponent</div>
+        <div className='home-wrapper'>HomeComponent</div>
     )
 }
 
