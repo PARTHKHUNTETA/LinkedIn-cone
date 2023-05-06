@@ -1,0 +1,16 @@
+.popup-card {
+  width: 150px;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.87);
+  color: black;
+  position: absolute;
+  top: 58px;
+  right: 15px;
+  border: 2px solid darkgray;
+  border-radius: 10px;
+  .popup-options {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+  }
+}

@@ -11,6 +11,8 @@ import { auth } from "../../firebaseConfig";
 const RegisterComponent = () => {
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({})
+    const [isAgree, setIsAgree] = useState(false);
+
     const Register = () => {
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
@@ -35,6 +37,17 @@ const RegisterComponent = () => {
 
                 <div className="auth-inputs">
                     <label>
+                        Name
+                        <input
+                            onChange={(event) =>
+                                setCredentials({ ...credentials, name: event.target.value })
+                            }
+                            type="text"
+                            className="common-input"
+                            placeholder="Your Name"
+                        />
+                    </label>
+                    <label>
                         Email or phone number
                         <input
                             onChange={(event) =>
@@ -57,8 +70,14 @@ const RegisterComponent = () => {
                         />
                     </label>
                 </div>
-                <label className="User-aggreement-checkbox"><input type="checkbox" />By clicking Agree & join you agrre to linkeIn User Agreement</label>
-                <button onClick={Register} className="login-btn">
+                <label className="User-aggreement-checkbox" >
+                    <input
+                        id="User-aggreement-checkbox"
+                        onChange={(e) => setIsAgree(e.target.checked)}
+                        type="checkbox" />
+                    By clicking Agree & join you agree to linkedIn User Agreement
+                </label>
+                <button disabled={!isAgree} onClick={Register} className="login-btn">
                     Agree & join
                 </button>
 
