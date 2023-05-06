@@ -1,0 +1,62 @@
+.post-status-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .post-status {
+    width: 60%;
+    background-color: #fff;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    margin-top: 30px;
+    border: 1px solid darkgray;
+    .Post-writing {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-bottom: 5px;
+      margin-top: 2px;
+
+      .user-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      .open-post-model {
+        width: 85%;
+        height: 50px;
+        text-align: left;
+        color: #212121;
+        background-color: #fff;
+        outline: none;
+        border: 1px solid darkgray;
+        border-radius: 0.8rem;
+        margin: 0.4rem 0;
+        cursor: pointer;
+        padding: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+      }
+      .open-post-model :hover {
+        background-color: #dcdbdb;
+      }
+    }
+    .Post-ammenities {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      border: none;
+
+      .Post-ammenities-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+  }
+}

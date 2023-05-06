@@ -1,5 +1,4 @@
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 
 export const LoginAPI = (email, password) => {
@@ -8,25 +7,22 @@ export const LoginAPI = (email, password) => {
         return response;
     }
     catch (err) {
+        console.log(err);
         return err
     }
 }
 
 export const RegisterAPI = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            return user;
-            // ...
-        })
-        .catch((error) => {
+    try {
+        const userCredential = createUserWithEmailAndPassword(auth, email, password)
+        return userCredential.user
+    }
+    catch (error) {
+        const errorMessage = error.message;
+        return errorMessage;
+    }
 
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            return errorMessage;
 
-        });
 }
 
 export const GoogleSignInAPI = () => {

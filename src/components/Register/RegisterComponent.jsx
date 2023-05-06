@@ -3,22 +3,26 @@
 import React, { useState } from "react";
 import LinkedInLogo from '../../assets/Images/LinkedInLogo.png'
 import { useNavigate } from "react-router-dom";
-import { RegisterAPI } from "../../api/AuthAPI";
 import { toast } from 'react-toastify';
 import "./RegisterComponent.scss";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../../firebaseConfig";
 
 const RegisterComponent = () => {
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({})
     const Register = () => {
-        try {
-            let res = RegisterAPI(credentials.email, credentials.password);
-            toast.success("Account created");
-            navigate("/home");
-        }
-        catch (err) {
-            toast.error("cannot create your account");
-        }
+        createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
+            .then((userCredential) => {
+                toast.success("Account created");
+                localStorage.setItem("userEmail", userCredential?.user?.email);
+                navigate("/home");
+            })
+            .catch((err) => {
+                console.log(err)
+                toast.error("Cannot create your account")
+            })
+
     };
 
     return (

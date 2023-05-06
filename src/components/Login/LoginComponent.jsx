@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import LinkedInLogo from '../../assets/Images/LinkedInLogo.png'
 import { useNavigate } from "react-router-dom";
-import { LoginAPI, GoogleSignInAPI } from "../../api/AuthAPI";
+import { GoogleSignInAPI } from "../../api/AuthAPI";
+import { signInWithEmailAndPassword, } from 'firebase/auth';
+import { auth } from "../../firebaseConfig";
 import { toast } from 'react-toastify';
 import "./LoginComponent.scss";
 
 const LoginComponent = () => {
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({})
-  const login = async () => {
-    try {
-      let res = await LoginAPI(credentials.email, credentials.password);
-      toast.success("Signed In to Linkedin!");
-      localStorage.setItem("userEmail", res.user.email);
-      navigate("/home");
-    }
-    catch (err) {
-      console.log(err);
-      toast.error("Please Check your Credentials");
-    }
+  const Login = () => {
+
+    signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+      .then((res) => {
+        toast.success("Welcome to Linkedin!");
+        localStorage.setItem("userEmail", res?.user?.email);
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Please Check your Credentials");
+      })
   };
 
   const googleSignIn = () => {
@@ -51,7 +54,7 @@ const LoginComponent = () => {
             placeholder="Password"
           />
         </div>
-        <button onClick={login} className="login-btn">
+        <button onClick={Login} className="login-btn">
           Sign in
         </button>
         <button onClick={googleSignIn} className="login-btn">
