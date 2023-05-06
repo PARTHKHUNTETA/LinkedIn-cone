@@ -7,17 +7,26 @@ import { toast } from 'react-toastify';
 import "./RegisterComponent.scss";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "../../firebaseConfig";
+import { PostUserData } from "../../api/FireStoreApi";
 
 const RegisterComponent = () => {
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({})
     const [isAgree, setIsAgree] = useState(false);
 
+    let data = {
+        name: credentials?.name ? credentials?.name : 'Dummy User',
+        email: credentials?.email ? credentials?.email?.toLowerCase() : 'dummy@gmail.com'
+    }
+
     const Register = () => {
+        localStorage.setItem("userEmail", credentials?.email?.toLowerCase());
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
+                PostUserData(data)
+            })
+            .then(() => {
                 toast.success("Account created");
-                localStorage.setItem("userEmail", userCredential?.user?.email);
                 navigate("/home");
             })
             .catch((err) => {
@@ -50,8 +59,9 @@ const RegisterComponent = () => {
                     <label>
                         Email or phone number
                         <input
-                            onChange={(event) =>
+                            onChange={(event) => {
                                 setCredentials({ ...credentials, email: event.target.value })
+                            }
                             }
                             type="email"
                             className="common-input"

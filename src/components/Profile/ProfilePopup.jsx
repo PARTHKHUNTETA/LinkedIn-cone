@@ -6,7 +6,7 @@ const ProfilePopup = () => {
     return (
         <div className='popup-card'>
             <ul className='popup-options'>
-                <li className='popup-option'><button on onClick={Logout}>Logout</button></li>
+                <li className='popup-option'><button onClick={Logout}>Logout</button></li>
             </ul>
         </div>
     )

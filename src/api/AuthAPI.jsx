@@ -45,6 +45,7 @@ export const GoogleSignInAPI = () => {
 export const Logout = () => {
     try {
         signOut(auth);
+        localStorage.removeItem("userEmail");
     }
     catch (err) {
         console.log(err);

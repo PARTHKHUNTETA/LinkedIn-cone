@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 import { BiVideo } from 'react-icons/bi';
 import { BsCalendarEvent } from 'react-icons/bs';
@@ -10,31 +10,38 @@ import './PostStatus.scss'
 import PostCard from './PostCard';
 import Shimmer from '../common/Shimmer';
 import { getCurrentTimeStamp } from '../../utils/useMoment';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function PostStatus() {
+export default function PostStatus({ currentUser }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [status, setStatus] = useState('');
     const [allPost, setAllPost] = useState([])
+
     let data = {
         status: status,
-        timeStamp: getCurrentTimeStamp('LLL'),
-        email: localStorage.getItem("userEmail")
+        timeStamp: getCurrentTimeStamp('MMMM Do YYYY, h: mm: ss a'),
+        userEmail: currentUser[0]?.email,
+        userName: currentUser[0]?.name,
+        postId: uuidv4()
     }
+
     const sendStatus = () => {
         try {
             PostUpload(data);
             setStatus('')
             setIsModalOpen(false)
-            toast.success("Document has been added successfully!");
+            toast.success("Post added successfully!");
         }
         catch (err) {
             console.log(err);
             toast.error("Error occured during uploading a document");
         }
     }
-    useMemo(() => {
+
+    useEffect(() => {
         getPost(setAllPost);
     }, [])
+
     return (
         <div className='post-status-main'>
             <div className='post-status'>

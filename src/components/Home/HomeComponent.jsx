@@ -1,10 +1,10 @@
 import React from 'react'
 import './HomeComponent.scss';
 import PostStatus from '../Post/PostStatus';
-function HomeComponent() {
+function HomeComponent({ currentUser }) {
     return (
         <div className='home-wrapper'>
-            <PostStatus />
+            <PostStatus currentUser={currentUser} />
         </div>
     )
 }
